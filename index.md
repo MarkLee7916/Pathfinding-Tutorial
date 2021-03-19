@@ -31,7 +31,7 @@ verify is the shortest one.
 
 With this setup we can't make a very clever algorithm, but we can still find any existing path and even guarantee that it's the shortest. The idea is to just to explore the grid until we 
 hit the goal. When we explore the grid, how do we decide what tile to go to next? This question is the difference between so called "uninformed search algorithms", although I prefer to 
-call them exploration algorithms
+call them exploration algorithms.
 
 ## Depth First Search
 
@@ -49,42 +49,25 @@ we'll get through all the tiles at distance 1 before we consider any tile at dis
 at distance 3 and so on...
 
 When we visit the goal we know we've found the shortest way to get to it, because if a shorter way existed we'd have seen it before. Say the goal was at distance 10. We've already explored all the tiles
-at distances 1 through 9, and none of them were the goal, so we know for sure that the way we've got to the goal is the minimum distance, which means that it must also be the shortest path
+at distances 1 through 9, and none of them were the goal, so we know for sure that the way we've got to the goal is the minimum distance, which means that it must also be the shortest path.
 
-## Welcome to GitHub Pages
+## Weights
 
-You can use the [editor on GitHub](https://github.com/MarkLee7916/Pathfinding-Tutorial/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+When you're exploring the world not all roads are created equal. Some are smooth and easy to drive on, while some are bumpy and full of potholes. So what seems like the shortest path might not actually be the shortest path if we have to cross a bunch
+of badly paved roads. To model this, we can assign a tile a weight which tells us how much it costs to cross it. To find the shortest path, some algorithms will try to minimise the total cost. Algorithms that do this are weighted.
+However some algorithms simply ignore these weights. These algorithms are unweighted.
+            
+## Dijkstra's algorithm
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+Breadth first search and depth first search don't consider these weights, so we need a new algorithm, namely Dijkstra's. The idea behind Dijkstra's is to keep track of the total
+cost to get to each tile as we explore the grid. For instance if to get to a tile we had to get through tiles of weights 1, 2, and 3, then the total cost would be 6.
+When it comes to selecting which tile to visit next, we always pick the tile with the lowest total cost. This guarantees the shortest path for weighted grids, but why?
 
-### Markdown
+The reasoning is similar to breadth first search. Since we always look at nodes that are the smallest cost, we know that when we reach the goal there can't have been a shorter
+path to the goal, as we would have already seen it before.
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
 
-```markdown
-Syntax highlighted code block
 
-# Header 1
-## Header 2
-### Header 3
 
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/MarkLee7916/Pathfinding-Tutorial/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+                
+            
