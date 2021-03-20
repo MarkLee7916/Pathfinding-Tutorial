@@ -72,6 +72,9 @@ You may be wondering, what if we actually know where the goal is? For instance i
 know how to get to the goal, but we know what direction we should be looking in at least. This leads us to two new algorithms. One algorithm guarantees the shortest path, and does it
 faster than Dijkstra's, while one finds us a path rapidly, but not necessarily the shortest one.
 
+Another word for these estimates is "heuristics". In the visualiser, there's a dropdown menu to select either a manhattan heuristic, a chebyshev heuristic or a euclidean heuristic.
+These are just different ways of calculating distances in a 2D grid, so give different estimates of what the distance will be.
+
 ## Best First Search
 
 Since this is a coordinate system, we can estimate the distance from the goal if we know what coordinate the goal is in. For instance if we're at the coordinate (5, 5) and the
@@ -89,6 +92,27 @@ it also works for weighted graphs. The idea is to always pick the tile that has 
 We can see why this will help us reach the goal faster. If a tile is far away from the goal, A* is less likely to pick it as the estimated distance is a factor in how it picks
 which tile to explore next. However, it's not so obvious why this will give us the shortest path. In fact, A* will only guarantee the shortest path if our estimate never overestimates the distance.
 But why?
+
+Say we have just discovered a tile, and we know it's the goal. We want to know for certain that for any other tile in the grid, the distance between that tile and the goal added to the
+distance between that tile and the start is greater than the distance from start to goal for the tile we found at the goal. In other words, we want to know that for any tile
+
+`total cost to get to tile from start + actual distance from tile to goal >= total cost to get from start to goal`
+
+We already know that, since this is the first time we've visited the goal, that 
+
+`total cost to get to tile from start + estimated distance from tile to goal >= total cost to get from start to goal`
+
+Since we know the estimated distance will always be smaller than the actual distance, we know that the formula we want will always hold. Therefore A* will always find the shortest
+path if we never overestimate the distance.
+
+This may be a bit unintuitive, but another way to think of it is this: "don't let a large overestimate put you off the shortest path"
+
+
+
+
+
+
+
 
 
 
